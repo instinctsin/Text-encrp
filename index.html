@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>온라인 텍스트 암호화 실험실</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="container">
+        <h1>온라인 텍스트 암호화 실험실</h1>
+        <p>
+          최신 웹 암호화 API를 활용한 V1/V2/V3 암호화와 다중 복호화를 한 번에
+          실험해 보세요.
+        </p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>텍스트 암호화</h2>
+        <form id="encrypt-form" class="stack" autocomplete="off">
+          <label class="stack">
+            <span>암호화할 텍스트</span>
+            <textarea name="plain" rows="4" required placeholder="블로그에 공유할 텍스트를 입력하세요."></textarea>
+          </label>
+
+          <label class="stack">
+            <span>암호화 비밀번호</span>
+            <input
+              type="password"
+              name="passphrase"
+              required
+              placeholder="사용자만 알고 있는 비밀번호"
+            />
+          </label>
+
+          <label class="stack">
+            <span>암호화 방식</span>
+            <select name="version" required>
+              <option value="V1">V1 · AES-GCM 256bit</option>
+              <option value="V2">V2 · AES-CBC 256bit</option>
+              <option value="V3">V3 · AES-CTR 256bit</option>
+            </select>
+          </label>
+
+          <button type="submit" class="primary">텍스트 암호화</button>
+        </form>
+        <div id="encrypt-result" class="result" hidden>
+          <div class="result__header">
+            <strong>암호화 결과(JSON)</strong>
+            <button type="button" id="copy-encrypted" class="ghost">복사</button>
+          </div>
+          <pre><code id="encrypted-output"></code></pre>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>텍스트 복호화</h2>
+        <p class="muted">
+          암호화 결과(JSON)를 붙여넣고 복호화를 실행하면 V1/V2/V3 방식이 모두
+          시도되어 각각의 결과가 표시됩니다.
+        </p>
+        <form id="decrypt-form" class="stack" autocomplete="off">
+          <label class="stack">
+            <span>암호화 JSON 데이터</span>
+            <textarea
+              name="payload"
+              rows="6"
+              required
+              placeholder='예: {"version":"V1", ... }'
+            ></textarea>
+          </label>
+
+          <label class="stack">
+            <span>암호화 비밀번호</span>
+            <input type="password" name="passphrase" required placeholder="암호화에 사용한 비밀번호" />
+          </label>
+
+          <button type="submit" class="primary">모든 방식으로 복호화</button>
+        </form>
+
+        <div id="decrypt-results" class="grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <template id="decrypt-card">
+      <article class="card card--muted">
+        <header>
+          <h3></h3>
+          <p class="status"></p>
+        </header>
+        <pre><code></code></pre>
+      </article>
+    </template>
+
+    <footer class="page-footer">
+      <div class="container">
+        <p>
+          웹 암호화 API(Web Crypto)를 사용해 브라우저 안에서 모든 처리가 수행되며,
+          서버로 텍스트가 전송되지 않습니다.
+        </p>
+      </div>
+    </footer>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
